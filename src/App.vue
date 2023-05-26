@@ -1,47 +1,39 @@
-<script setup>
-import HelloWorld from './components/HelloWorld.vue'
-import TheWelcome from './components/TheWelcome.vue'
-</script>
-
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-    </div>
-  </header>
-
-  <main>
-    <TheWelcome />
-  </main>
+  <div class="el"></div>
 </template>
 
-<style scoped>
-header {
-  line-height: 1.5;
+<script>
+import { ref } from 'vue'
+
+export default {
+  name: 'LayoutDefault',
+
+  components: {
+
+  },
+
+  setup () {
+    return {
+      leftDrawerOpen: ref(false)
+    }
+  }
+}
+</script>
+<style>
+body{
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
 }
 
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
+.el{
+  position: absolute;
+  width: 200%;
+  height: 100%;
+  left: -50%;
+  top: 30%;
 
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
+  background: linear-gradient(to bottom, rgba(15, 63, 187, 0.79), rgba(52, 150, 235, 0.79));
+  border-radius: 50%;
 }
 </style>
