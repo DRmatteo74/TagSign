@@ -1,19 +1,14 @@
 <template>
   <div class="el"></div>
-<div class="row">
-  <div class="col-lg-1"></div>
-  <div class="col-lg-10 fully">
-    <h1>coucou</h1>
-    <br>
-    <h1>coucou</h1>
-    <br>
-    <h1>coucou</h1>
-    <br>
-    <h1>coucou</h1>
-    <br>
-  </div>
-  <div class="col-lg-1"></div>
-</div>
+  <q-layout>
+      <q-page-container class="container">
+        <div class="card">
+          
+          <router-view></router-view>
+        </div>
+      </q-page-container>
+  </q-layout>
+
 </template>
 
 <script>
@@ -50,8 +45,20 @@ body{
   background: linear-gradient(to bottom, rgba(15, 63, 187, 0.79), rgba(52, 150, 235, 0.79));
   border-radius: 50%;
 }
-.fully{
-  background: rgb(65, 51, 51);
-  z-index: 0;
+
+.container{
+  width: 100vw;
+  height: 100vh;
+  padding: 60px 100px 60px 100px;
 }
+
+.card{
+  background: #F6F6F6;
+  width: 100%;
+  height: 100%;
+  padding: 30px;
+  border-radius: 15px;
+}
+
+
 </style>
