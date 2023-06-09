@@ -3,7 +3,7 @@
   <q-layout>
       <q-page-container class="container">
         <div class="card">
-          
+          <PlanningSmall />
           <router-view></router-view>
         </div>
       </q-page-container>
@@ -13,12 +13,13 @@
 
 <script>
 import { ref } from 'vue'
+import PlanningSmall from './components/planning.vue'
 
 export default {
   name: 'LayoutDefault',
 
   components: {
-
+    PlanningSmall
   },
 
   setup () {
