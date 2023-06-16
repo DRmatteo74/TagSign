@@ -3,6 +3,17 @@
   <q-layout>
       <q-page-container class="container">
         <div class="card">
+          <div class="q-pa-md example-row-equal-width">
+
+<div class="row">
+  <div class="col-4">
+    <NextClass/>
+  </div>
+  <div class="col-7 q-ml-lg">
+     <!-- <NextClass/> -->
+  </div>
+</div>
+</div>
           
           <router-view></router-view>
         </div>
@@ -13,12 +24,13 @@
 
 <script>
 import { ref } from 'vue'
+import NextClass from './components/NextClass.vue'
 
 export default {
   name: 'LayoutDefault',
 
   components: {
-
+    NextClass
   },
 
   setup () {
