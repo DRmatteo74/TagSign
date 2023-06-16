@@ -19,7 +19,7 @@ export default {
       positive: '#21BA45',
       negative: '#C10015',
       info: '#31CCEC',
-      warning: '#F2C037'
+      warning: '#fabfcd'
     },
     typography: {
       fontFamily: 'Poppins,Helvetica,sans-serif',
