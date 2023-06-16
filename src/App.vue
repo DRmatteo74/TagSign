@@ -3,7 +3,6 @@
   <q-layout>
       <q-page-container class="container">
         <div class="card">
-<<<<<<< HEAD
           <div class="q-pa-md example-row-equal-width">
 
 <div class="row">
@@ -12,13 +11,11 @@
   </div>
   <div class="col-7 q-ml-lg">
      <!-- <NextClass/> -->
+     <PlanningSmall />
   </div>
 </div>
 </div>
           
-=======
-          <PlanningSmall />
->>>>>>> 74b188cdef6e9c0b834e38847333234cb2eb41a8
           <router-view></router-view>
         </div>
       </q-page-container>
@@ -29,12 +26,14 @@
 <script>
 import { ref } from 'vue'
 import NextClass from './components/NextClass.vue'
+import PlanningSmall from './components/planning.vue'
 
 export default {
   name: 'LayoutDefault',
 
   components: {
-    NextClass
+    NextClass,
+    PlanningSmall
   },
 
   setup () {
