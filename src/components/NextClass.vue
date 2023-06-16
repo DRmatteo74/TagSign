@@ -15,15 +15,15 @@ import { ref } from 'vue'
  <q-card flat 
   ordered
   style="background: #fff; border-radius: 3%;">
-    <div>
-      <q-badge v-if="validation === true" floating color="green" rounded />
-      <q-badge v-else floating color="red" rounded />
-    </div>
   <q-card-section>
     <b>Cour a venir :</b>
     <q-card
       class="my-card" 
       style="background: #009eF7">
+      <div>
+      <q-badge v-if="validation === true" floating color="green" rounded />
+      <q-badge v-else floating color="red" rounded />
+    </div>
       <q-card-section>
         <div class="text-h6 center">Jeudi 11 mai 2023 11h15</div>
         <div class="text-h4 center">Anglais</div>

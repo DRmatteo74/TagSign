@@ -10,7 +10,6 @@
     <NextClass/>
   </div>
   <div class="col-7 q-ml-lg">
-     <!-- <NextClass/> -->
      <PlanningSmall />
   </div>
 </div>
