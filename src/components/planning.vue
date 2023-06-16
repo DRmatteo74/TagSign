@@ -1,5 +1,5 @@
 <template>
-    <q-page class="full-height">
+    <div class="full-height">
         <div class="card-module">
             <div class="text-h6 text-weight-bold">Emploi du temps</div>
             <p class="text-grey-7 text-weight-thin">Emploi du temps prévisionnel, sous réserve de modification</p>
@@ -32,7 +32,7 @@
                 :interval-start="7"
                 :interval-count="13"
                 bordered
-                style="width: 100%; height: 77%; border-radius: 7px;"
+                style="width: 100%; height: 50vh; border-radius: 7px;"
             >
 
                 <template #day-body="{ scope: { timestamp, timeStartPos, timeDurationHeight } }">
@@ -54,7 +54,7 @@
                 </template>
             </q-calendar>
         </div>
-    </q-page>
+    </div>
 </template>
 
 <style src="@quasar/quasar-ui-qcalendar/dist/index.css"></style>

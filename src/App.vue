@@ -5,15 +5,16 @@
         <div class="card">
           <div class="q-pa-md example-row-equal-width">
 
-<div class="row">
-  <div class="col-4">
-    <NextClass/>
-  </div>
-  <div class="col-7 q-ml-lg">
-     <PlanningSmall />
-  </div>
-</div>
-</div>
+          <div class="row justify-between">
+            <div class="col-auto q-mr-md" style="width: 35%;">
+              <NextClass class="q-mb-md"/>
+              <Absence/>
+            </div>
+            <div class="col">
+               <PlanningSmall />
+            </div>
+          </div>
+        </div>
           
           <router-view></router-view>
         </div>
@@ -25,14 +26,16 @@
 <script>
 import { ref } from 'vue'
 import NextClass from './components/NextClass.vue'
-import PlanningSmall from './components/planning.vue'
+import PlanningSmall from './components/Planning.vue'
+import Absence from './components/AbsenceEleveModule.vue'
 
 export default {
   name: 'LayoutDefault',
 
   components: {
     NextClass,
-    PlanningSmall
+    PlanningSmall,
+    Absence
   },
 
   setup () {
