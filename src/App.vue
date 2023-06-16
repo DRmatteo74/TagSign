@@ -3,6 +3,7 @@
   <q-layout>
       <q-page-container class="container">
         <div class="card">
+<<<<<<< HEAD
           <div class="q-pa-md example-row-equal-width">
 
 <div class="row">
@@ -15,6 +16,9 @@
 </div>
 </div>
           
+=======
+          <PlanningSmall />
+>>>>>>> 74b188cdef6e9c0b834e38847333234cb2eb41a8
           <router-view></router-view>
         </div>
       </q-page-container>
