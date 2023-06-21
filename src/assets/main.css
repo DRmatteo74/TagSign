@@ -1,41 +1,24 @@
-@import 'base.css';
-
-#app {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-
-  font-weight: normal;
+:root{
+  --bgColor: #ffffff;
+  --ellipseColor: linear-gradient(to bottom, rgba(15, 63, 187, 0.79), rgba(52, 150, 235, 0.79));
+  --cardColor: #f6f6f6;
+  --moduleBackgroundColor : #FFFFFF;
+  --moduleColor: #009EF7;
+  --buttonColor: #F6F6F6;
+  --textColor: black;
 }
 
-a,
-.green {
-  text-decoration: none;
-  color: hsla(160, 100%, 37%, 1);
-  transition: 0.4s;
+:root.dark-theme{
+  --bgColor: linear-gradient(to top, rgba(2,0,36,1) 0%, rgba(2,35,118,1) 56%);
+  --ellipseColor: #151521;
+  --cardColor: #1A1A27;
+  --moduleBackgroundColor: #1E1E2D;
+  --buttonColor: #151521;
+  --textColor: white;
 }
 
-@media (hover: hover) {
-  a:hover {
-    background-color: hsla(160, 100%, 37%, 0.2);
-  }
-}
 
-@media (min-width: 1024px) {
-  body {
-    display: flex;
-    place-items: center;
-  }
-
-  #app {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    padding: 0 2rem;
-  }
-}
-
-body{
-  width: 100vw;
-  height: 100vh;
-  overflow: hidden;
+.btnColor{
+  background: var(--buttonColor);
+  color: var(--textColor);
 }

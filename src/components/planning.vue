@@ -7,10 +7,10 @@
             <div class="row">
                 <div class="col">
                     <q-btn-group class="q-mb-lg no-shadow">
-                        <q-btn color="secondary" text-color="black" label="<" @click="calendarPrev" />
-                        <q-btn color="secondary" text-color="black" label=">" @click="calendarNext"/>
+                        <q-btn class="btnColor" label="<" @click="calendarPrev" />
+                        <q-btn class="btnColor" label=">" @click="calendarNext"/>
                     </q-btn-group>
-                    <q-btn class="q-mb-lg q-ml-sm no-shadow" style="text-transform: none;" color="secondary" text-color="black" @click="calendarToday">Aujourd'hui</q-btn>
+                    <q-btn class="q-mb-lg q-ml-sm no-shadow btnColor" style="text-transform: none;" @click="calendarToday">Aujourd'hui</q-btn>
                 </div>
                 <div class="col">
                   <div class="text-center">
@@ -70,7 +70,7 @@
         height: 100%;
         border-radius: 10px;
         padding: 30px;
-        background-color: white;
+        background-color: var(--moduleBackgroundColor);
     }
 
     .q-btn:before {
@@ -78,7 +78,7 @@
     }
 
     .q-calendar-day__day.q-current-day{
-        background-color: #fff8dd;
+        background-color: #fff8ddb9;
     }
 
     .my-event{

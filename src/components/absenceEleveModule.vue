@@ -12,7 +12,7 @@
                             <div class="text-subtitle2 text-weight-bold no-margin no-padding">{{ event.title }}</div>
                             <p class="text-grey-7 text-weight-thin no-margin no-padding">{{ event.cours }}</p>
                         </div>
-                        <q-badge color="grey-2" text-color="grey-8" class="q-px-md q-py-xs" style="border-radius: 50px;">
+                        <q-badge text-color="grey-8" class="badge q-px-md q-py-xs" style="border-radius: 50px;">
                             <div v-if="event.justificatif == false" class="text-caption">Non justifié</div>
                             <div v-else class="text-caption">Justificatif envoyé</div>
                         </q-badge>
@@ -29,12 +29,17 @@
     height: 100%;
     border-radius: 10px;
     padding: 30px;
-    background-color: white;
+    background-color: var(--moduleBackgroundColor);
 }
 
 .q-btn:before {
     box-shadow: none !important;
 }
+
+.badge{
+    background: var(--buttonColor) !important;
+}
+
 </style>
 
 <script>
