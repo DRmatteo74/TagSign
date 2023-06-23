@@ -2,9 +2,13 @@
     <div class="card">
         <div class="q-pa-md example-row-equal-width fit">
             <div class="row justify-between fit">
-                <div class="col-auto q-mr-md" style="width: 35%;">
-                    <NextClass class="q-mb-md"/>
-                    <Absence/>
+                <div class="column q-mr-md" style="width: 35%; height: 100%;">
+                    <div class="col-auto q-mb-md">
+                      <NextClass/>
+                    </div>
+                    <div class="col">
+                      <Absence/>
+                    </div>
                 </div>
                 <div class="col">
                     <PlanningSmall />
