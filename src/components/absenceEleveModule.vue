@@ -50,6 +50,15 @@
                                     <q-btn v-if="event.justificatif == true" class="btnColor">Envoyé un nouveau justificatif</q-btn>
                                     <q-btn v-else class="btnColor">Envoyé un justificatif</q-btn>
                                 </div>
+                                <q-uploader
+                                    url="http://localhost:4444/upload"    
+                                    class="q-mt-sm btnColor no-shadow"
+                                    label="Fichiers"
+                                    multiple
+                                    max-file-size="5242880"
+                                    max-total-size="15728640"
+                                    accept=".jpg, image/*, .pdf, .png, .doc"
+                                />
                             </q-card-section>
                         </q-card>
                     </q-dialog>
