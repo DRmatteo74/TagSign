@@ -5,7 +5,7 @@
         <div class="card">
           <div class="q-pa-md example-row-equal-width">
 
-          <div class="row justify-between">
+          <div v-if="userRole === 'élève'" class="row justify-between">
             <div class="col-auto q-mr-md" style="width: 35%;">
               <NextClass class="q-mb-md"/>
               <Absence/>
@@ -40,7 +40,8 @@ export default {
 
   setup () {
     return {
-      leftDrawerOpen: ref(false)
+      leftDrawerOpen: ref(false),
+      userRole: ref("élève"),
     }
   }
 }
