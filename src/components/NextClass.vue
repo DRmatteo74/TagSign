@@ -14,7 +14,7 @@ import { ref } from 'vue'
 <template>
  <q-card flat 
   ordered
-  style="background: #fff; border-radius: 10px; padding: 10px;">
+  style="background: var(--moduleBackgroundColor); border-radius: 10px; padding: 10px;">
   <q-card-section>
     <div class="text-h6 text-weight-bold">Cours à venir</div>
     <q-card

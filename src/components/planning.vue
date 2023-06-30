@@ -1,27 +1,27 @@
 <template>
     <div class="full-height">
         <div class="card-module">
-            <div class="text-h6 text-weight-bold">Emploi du temps</div>
-            <p class="text-grey-7 text-weight-thin">Emploi du temps prévisionnel, sous réserve de modification</p>
+                <div class="text-h6 text-weight-bold">Emploi du temps</div>
+                <p class="text-grey-7 text-weight-thin">Emploi du temps prévisionnel, sous réserve de modification</p>
 
-            <div class="row">
-                <div class="col">
-                    <q-btn-group class="q-mb-lg no-shadow">
-                        <q-btn color="secondary" text-color="black" label="<" @click="calendarPrev" />
-                        <q-btn color="secondary" text-color="black" label=">" @click="calendarNext"/>
-                    </q-btn-group>
-                    <q-btn class="q-mb-lg q-ml-sm no-shadow" style="text-transform: none;" color="secondary" text-color="black" @click="calendarToday">Aujourd'hui</q-btn>
+                <div class="row">
+                    <div class="col">
+                        <q-btn-group class="q-mb-lg no-shadow">
+                            <q-btn class="btnColor" label="<" @click="calendarPrev" />
+                            <q-btn class="btnColor" label=">" @click="calendarNext"/>
+                        </q-btn-group>
+                        <q-btn class="q-mb-lg q-ml-sm no-shadow btnColor" style="text-transform: none;" @click="calendarToday">Aujourd'hui</q-btn>
+                    </div>
+                    <div class="col-auto">
+                      <div class="text-center">
+                        <div class="text-h6 text-weight-bold">{{ formattedDate }}</div>
+                      </div>
+                    </div>
+                    <div class="col">
+                    </div>
                 </div>
-                <div class="col">
-                  <div class="text-center">
-                    <div class="text-h6 text-weight-bold">{{ formattedDate }}</div>
-                  </div>
-                </div>
-                <div class="col">
-                </div>
-            </div>
             
-
+            
             <q-calendar
                 ref="calendar"
                 v-model="selectedDate"
@@ -31,8 +31,9 @@
                 hour24-format
                 :interval-start="7"
                 :interval-count="13"
+                :interval-height="30"
                 bordered
-                style="width: 100%; height: 50vh; border-radius: 7px;"
+                style="width: 100%; height: 45vh; border-radius: 7px;"
             >
 
                 <template #day-body="{ scope: { timestamp, timeStartPos, timeDurationHeight } }">
@@ -70,7 +71,7 @@
         height: 100%;
         border-radius: 10px;
         padding: 30px;
-        background-color: white;
+        background-color: var(--moduleBackgroundColor);
     }
 
     .q-btn:before {
@@ -78,7 +79,7 @@
     }
 
     .q-calendar-day__day.q-current-day{
-        background-color: #fff8dd;
+        background-color: #fff8ddb9;
     }
 
     .my-event{
@@ -200,5 +201,5 @@
             }
         }
     }
-    
+
 </script>
