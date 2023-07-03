@@ -5,7 +5,7 @@ import { ref } from 'vue'
 
   setup () {
     return {
-      validation: ref(false)
+      validation: ref(true)
     }
   }
 }
