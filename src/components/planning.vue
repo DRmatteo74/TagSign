@@ -1,6 +1,7 @@
 <template>
-    <div class="full-height">
-        <div class="card-module">
+    <div class="fit">
+        <q-layout class="card-module" container>
+            <q-header reveal view="lHh Lpr lFf" class="q-px-lg q-pt-lg bg-moduleBackgroundColor text-color">
                 <div class="text-h6 text-weight-bold">Emploi du temps</div>
                 <p class="text-grey-7 text-weight-thin">Emploi du temps prévisionnel, sous réserve de modification</p>
 
@@ -20,8 +21,11 @@
                     <div class="col">
                     </div>
                 </div>
+            </q-header>
+                
             
-            
+            <q-page-container>
+            <q-page padding>
             <q-calendar
                 ref="calendar"
                 v-model="selectedDate"
@@ -33,7 +37,7 @@
                 :interval-count="13"
                 :interval-height="30"
                 bordered
-                style="width: 100%; height: 45vh; border-radius: 7px;"
+                style="width: 100%; border-radius: 7px;"
             >
 
                 <template #day-body="{ scope: { timestamp, timeStartPos, timeDurationHeight } }">
@@ -54,26 +58,14 @@
                     </template>
                 </template>
             </q-calendar>
-        </div>
+        </q-page>
+        </q-page-container>
+        </q-layout>
     </div>
 </template>
 
 <style src="@quasar/quasar-ui-qcalendar/dist/index.css"></style>
 <style>
-    .full-height{
-        width: 100%;
-        height: 100%;
-        min-height: 0 !important;
-    }
-
-    .card-module{
-        width: 100%;
-        height: 100%;
-        border-radius: 10px;
-        padding: 30px;
-        background-color: var(--moduleBackgroundColor);
-    }
-
     .q-btn:before {
         box-shadow: none !important;
     }

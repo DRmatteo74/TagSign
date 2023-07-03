@@ -4,7 +4,7 @@
             <div class="row justify-between fit">
                 <div class="column q-mr-md" style="width: 35%; height: 100%;">
                     <div class="col-auto q-mb-md">
-                      <NextClass/>
+                      <NextClass :is-prof="isProf"/>
                     </div>
                     <div class="col" v-if="isEleve">
                       <Absence/>
@@ -42,8 +42,8 @@ export default {
 
   data(){
     return {
-      isProf : false,
-      isEleve : true,
+      isProf : true,
+      isEleve : false,
       isAp : false,
       isAdmin : false
     }

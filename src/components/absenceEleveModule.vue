@@ -1,9 +1,11 @@
 <template>
-        <div class="card-module" style="overflow-y: auto;">
-            <div class="text-h6 text-weight-bold">Absences</div>
-            <p class="text-grey-7 text-weight-thin">1 absences non justifié</p>
-            
-            <div>
+        <q-layout class="card-module" container >
+            <q-header reveal  view="lHh Lpr lFf" class="q-px-lg q-pt-lg bg-moduleBackgroundColor text-color">
+                <div class="text-h6 text-weight-bold">Absences</div>
+                <p class="text-grey-7 text-weight-thin">1 absences non justifié</p>
+            </q-header>
+            <q-page-container>
+            <q-page padding>
                 <q-btn @click="event.id = true" v-for="event in events" :key="event.id" class="q-px-none full-width">
                     <div class="row no-wrap items-center full-width">
                         <div class="col-1">
@@ -64,20 +66,15 @@
                         </q-card>
                     </q-dialog>
                 </q-btn>
-            </div>
-            
-        </div>
+                <q-page-scroller position="bottom-right" :scroll-offset="150" :offset="[18, 18]">
+                    <q-btn fab icon="keyboard_arrow_up" color="primary" />
+                </q-page-scroller>
+            </q-page>
+        </q-page-container>
+        </q-layout>
 </template>
   
 <style>
-.card-module{
-    width: 100%;
-    height: 100%;
-    border-radius: 10px;
-    padding: 30px;
-    background-color: var(--moduleBackgroundColor);
-}
-
 .modal-color{
     background-color: var(--moduleBackgroundColor);
 }
