@@ -1,9 +1,9 @@
 <template>
-        <div class="card-module" style="overflow: hidden;">
+        <div class="card-module" style="overflow-y: auto;">
             <div class="text-h6 text-weight-bold">Absences</div>
             <p class="text-grey-7 text-weight-thin">1 absences non justifié</p>
             
-            <div style="overflow: scroll; height: 150px; ">
+            <div>
                 <q-btn @click="event.id = true" v-for="event in events" :key="event.id" class="q-px-none full-width">
                     <div class="row no-wrap items-center full-width">
                         <div class="col-1">
@@ -47,17 +47,18 @@
 
                             <q-card-section class="q-pt-none q-mt-sm">
                                 <div class="items-center text-center">
-                                    <q-btn v-if="event.justificatif == true" class="btnColor">Envoyé un nouveau justificatif</q-btn>
-                                    <q-btn v-else class="btnColor">Envoyé un justificatif</q-btn>
+                                    <q-btn @click="uploadFiles" v-if="event.justificatif == true" class="btnColor">Envoyé un nouveau justificatif</q-btn>
+                                    <q-btn @click="uploadFiles" v-else class="btnColor">Envoyé un justificatif</q-btn>
                                 </div>
                                 <q-uploader
-                                    url="http://localhost:4444/upload"    
                                     class="q-mt-sm btnColor no-shadow"
                                     label="Fichiers"
                                     multiple
+                                    ref="uploader"
                                     max-file-size="5242880"
                                     max-total-size="15728640"
                                     accept=".jpg, image/*, .pdf, .png, .doc"
+                                    :factory="factoryFn"
                                 />
                             </q-card-section>
                         </q-card>
@@ -86,6 +87,7 @@
 }
 </style>
 <script>
+
     export default {
         name: 'AbsenceEleveModule',
         data() {
@@ -104,10 +106,58 @@
                         cours: "Cours d'UML",
                         date: "05/05/2023 13h-14h30",
                         justificatif: false
+                    },
+                    {
+                        id: 3,
+                        title: "Absence du 5 décembre 2022 11h30-13h",
+                        cours: "Cours d'Anglais",
+                        date: "05/12/2022 10h30h-13h",
+                        justificatif: true
+                    },
+                    {
+                        id: 4,
+                        title: "Absence du 5 décembre 2022 11h30-13h",
+                        cours: "Cours d'Anglais",
+                        date: "05/12/2022 10h30h-13h",
+                        justificatif: true
+                    },
+                    {
+                        id: 5,
+                        title: "Absence du 5 décembre 2022 11h30-13h",
+                        cours: "Cours d'Anglais",
+                        date: "05/12/2022 10h30h-13h",
+                        justificatif: true
+                    },
+                    {
+                        id: 6,
+                        title: "Absence du 5 décembre 2022 11h30-13h",
+                        cours: "Cours d'Anglais",
+                        date: "05/12/2022 10h30h-13h",
+                        justificatif: true
                     }
-                ]
+                ],
+                selected_file:'',
+                check_if_document_upload:false
             }
-        }        
+        },
+        methods: {
+            // eslint-disable-next-line no-unused-vars
+            factoryFn (files) {
+
+                return new Promise((resolve) => {
+                  // simulating a delay of 2 seconds
+                  console.log("HELLO");
+                  setTimeout(() => {
+                    resolve({
+                        url: 'localhost:8000/api/absence/uploadJustificatif?cours=4&user=14',
+                        headers: [
+                            { name: 'Authorization', value: `bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE2ODgzMDI2NjksImV4cCI6MTY4ODMwNjI2OSwicm9sZXMiOlsiUk9MRV9BRE1JTiIsIlJPTEVfVVNFUiJdLCJ1c2VybmFtZSI6ImFkbWluIn0.JxSU518enkHX6VlsVEAd-Zl0hNrYey_sd7pP-loFbWF90t5q0S_GLD3aMUrJWfLA-L0ARE6VmOhNXcAMGZBSQV-gqJZFQgvbZUAlvbDDAO8lZF6gfh0809vz_mvC5FTNRQRNuQeplWFleCyNUZNKkbtmbn-Vljh6cQHPlMfdfo_xMuuOaP7deWeAXG1zvnrKsDa4UeW_GFBBzoFzybyy9MDEVKstYByWeX_hpeGD2UNlXeH4Suc-NY5FlEtWEauIGdrqZs440jl78faRoPEFWz-r1_oUWfkonTkgDZZS6XKvzPdZvq9OWTp3Oq-oc3yTLLh7G98wubMbf1tkcG6b0goJPZ5eArIzIVqJu2NT2RB0ambp0HemqkstCto77zw2DWx63YhnUn2mM_w54bEKxtiouxjP7bfFc5LhWRb6F4IXRtINqGBXkqs-AhF7Rta28vmRSG_M7YIQya6TbscHNmLm4rVtm02uEUaKe0rIjCTN7MQSANB0UCkKIFUf8M2qCuPdyclmymLA4mP49O1A6psLybAoKOcFslX55FxBtATWpd4BuOcyvpu1MmE1TIVpwXLD6wDMG2AZR3gn1jJbWNeMCv75YxtHp7BJSo0paAolukU6bBGgySZppn73rjFy22i92R8os612mO10Vkx-FXqO7S8UL2WCfS6IDf_9cfE` }
+                        ]
+                    })
+                  }, 500)
+                })
+            }
+        }
     }
 </script>
   

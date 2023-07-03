@@ -22,3 +22,7 @@
   background: var(--buttonColor);
   color: var(--textColor);
 }
+
+.q-body--fullscreen-mixin, .q-body--prevent-scroll{
+  position: relative !important;
+}

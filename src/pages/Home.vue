@@ -6,7 +6,7 @@
                     <div class="col-auto q-mb-md">
                       <NextClass/>
                     </div>
-                    <div class="col">
+                    <div class="col" v-if="isEleve">
                       <Absence/>
                     </div>
                 </div>
@@ -37,6 +37,15 @@ export default {
   setup () {
     return {
       leftDrawerOpen: ref(false)
+    }
+  },
+
+  data(){
+    return {
+      isProf : false,
+      isEleve : true,
+      isAp : false,
+      isAdmin : false
     }
   }
 }
