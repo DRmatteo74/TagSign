@@ -11,6 +11,7 @@
     "@quasar/cli": "^2.2.1",
     "@quasar/extras": "^1.0.0",
     "@quasar/quasar-ui-qcalendar": "^4.0.0-beta.16",
+    "axios": "^1.4.0",
     "core-js": "^3.8.3",
     "quasar": "^2.0.0",
     "vue": "^3.2.13",

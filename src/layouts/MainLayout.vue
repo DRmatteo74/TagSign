@@ -9,6 +9,11 @@
                     <img v-else src="../assets/sun.svg"/>
                   </q-avatar>
                 </q-btn>
+                <q-btn v-if="$route.path != '/'" v-bind:style="userTheme == 'dark-theme'? {'background-color': '#1A1A27'} : {'background-color': '#F6F6F6'}" class="fixed-top-left round_back_button q-pa-xs q-pr-md q-mt-lg" @click="goBack">
+                  <q-avatar size="3.5rem">
+                    <q-icon name="arrow_back" />
+                  </q-avatar>
+                </q-btn>
                 <router-view/>
             </q-page-container>
         </q-layout>
@@ -16,6 +21,8 @@
 </template>
 
 <script>
+import router from '@/router';
+
 
 export default {
   name: 'LayoutDefault',
@@ -68,6 +75,10 @@ export default {
         return "light-theme";
       }
     },
+
+    goBack(){
+        router.push("/")
+    }
   },
   
 }
@@ -102,6 +113,10 @@ body{
 
 .round_button{
   border-radius: 50px 0px 0px 50px;
+}
+
+.round_back_button{
+    border-radius: 0px 50px 50px 0px;
 }
 
 </style>

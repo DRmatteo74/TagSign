@@ -4,14 +4,14 @@
             <div class="row justify-between fit">
                 <div class="column q-mr-md" style="width: 35%; height: 100%;">
                     <div class="col-auto q-mb-md">
-                      <NextClass/>
+                      <NextClass :is-prof="isProf" v-if="isEleve || isProf"/>
                     </div>
-                    <div class="col">
-                      <Absence/>
+                    <div class="col" >
+                      <Absence v-if="isEleve"/>
                     </div>
                 </div>
                 <div class="col">
-                    <PlanningSmall />
+                    <PlanningSmall  v-if="isEleve || isProf"/>
                 </div>
             </div>
         </div>
@@ -37,6 +37,15 @@ export default {
   setup () {
     return {
       leftDrawerOpen: ref(false)
+    }
+  },
+
+  data(){
+    return {
+      isProf : false,
+      isEleve : false,
+      isAp : true,
+      isAdmin : false
     }
   }
 }
