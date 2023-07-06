@@ -84,66 +84,65 @@
 }
 </style>
 <script>
-
+import config from '@/assets/config.js';
+import axios from 'axios';
     export default {
         name: 'AbsenceEleveModule',
         data() {
             return {
-                events: [
-                    {
-                        id: 1,
-                        title: "Absence du 5 décembre 2022 11h30-13h",
-                        cours: "Cours d'Anglais",
-                        date: "05/12/2022 10h30h-13h",
-                        justificatif: true
-                    },
-                    {
-                        id: 2,
-                        title: "Absence du 5 mai 2023 13h-14h30",
-                        cours: "Cours d'UML",
-                        date: "05/05/2023 13h-14h30",
-                        justificatif: false
-                    },
-                    {
-                        id: 3,
-                        title: "Absence du 5 décembre 2022 11h30-13h",
-                        cours: "Cours d'Anglais",
-                        date: "05/12/2022 10h30h-13h",
-                        justificatif: true
-                    },
-                    {
-                        id: 4,
-                        title: "Absence du 5 décembre 2022 11h30-13h",
-                        cours: "Cours d'Anglais",
-                        date: "05/12/2022 10h30h-13h",
-                        justificatif: true
-                    },
-                    {
-                        id: 5,
-                        title: "Absence du 5 décembre 2022 11h30-13h",
-                        cours: "Cours d'Anglais",
-                        date: "05/12/2022 10h30h-13h",
-                        justificatif: true
-                    },
-                    {
-                        id: 6,
-                        title: "Absence du 5 décembre 2022 11h30-13h",
-                        cours: "Cours d'Anglais",
-                        date: "05/12/2022 10h30h-13h",
-                        justificatif: true
-                    }
-                ],
+                events: [],
+                id : 1,
                 selected_file:'',
                 check_if_document_upload:false
             }
         },
+        mounted() {
+            return this.fetchAbsences()
+        },
         methods: {
+            fetchAbsences() {
+                axios.get(config.apiUrl + 'absences/' + localStorage.getItem("idUser"), {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem("token")}`
+                }
+                })
+                    .then(response => {
+                        const absences = response.data.absences;
+                        this.events = absences.map(absence => {
+                            return {
+                                id: this.generateId(),
+                                title: `Absence du ${this.formatDate(absence.date.date)} ${this.formatTime(absence.heure.date)}`,
+                                cours: absence.cours,
+                                date: this.formatDateTime(absence.date.date, absence.heure.date),
+                                justificatif: absence.justifie !== null ? absence.justifie : false
+                            };
+                        });
+                    })
+                    .catch((e)=>{
+                        console.log(e);
+                    })
+            },
+            generateId() {
+                return this.id+=1; 
+            },
+            formatDate(date) {
+                const dd = new Date(date);
+                return dd.getDate().toString().padStart(2, '0') + "/" + dd.getMonth().toString().padStart(2, '0') + "/" + dd.getFullYear()
+            },
+            formatTime(time) {
+                const tt = new Date(time);
+                let tt2 = new Date(time);
+                tt2.setMinutes(tt2.getMinutes() + 90);
+                return tt.getHours().toString().padStart(2, '0') + "h" + tt.getMinutes().toString().padStart(2, '0') + "-" + tt2.getHours().toString().padStart(2, '0') + "h" + tt2.getMinutes().toString().padStart(2, '0');
+            },
+            formatDateTime(date, time) {
+                return this.formatDate(date) + " " + this.formatTime(time);
+            },
             // eslint-disable-next-line no-unused-vars
             factoryFn (files) {
 
                 return new Promise((resolve) => {
                   // simulating a delay of 2 seconds
-                  console.log("HELLO");
                   setTimeout(() => {
                     resolve({
                         url: 'localhost:8000/api/absence/uploadJustificatif?cours=4&user=14',

@@ -50,10 +50,12 @@
                             class="my-event"
                             :style="badgeStyles(event, 'body', timeStartPos, timeDurationHeight)"
                         >
-                            <span class="title q-calendar__ellipsis">
-                                {{ event.title }}
-                                <q-tooltip>{{ event.details }}</q-tooltip>
-                            </span>
+                            <div class="title q-calendar__ellipsis text-center">
+                                <div>
+                                    <div class="text-subtitle1 text-weight-bold">{{ event.title }}</div>
+                                    <div class="text-caption">Salle {{ event.details }}</div>
+                                </div>
+                            </div>
                         </div>
                     </template>
                 </template>
@@ -99,7 +101,8 @@
   
 <script>
     import { QCalendar, parseTimestamp, addToDate } from '@quasar/quasar-ui-qcalendar'
-
+    import axios from 'axios';
+    import config from '@/assets/config.js';
    
     export default {
         name: 'PlanningSmall',
@@ -109,29 +112,14 @@
         data() {
             return {
                 selectedDate: new Date().toISOString().split('T')[0],
-				events: [
-                    {
-                        id: 1,
-                        title: "Cours d'anglais",
-                        details: 'Time to pitch my idea to the company',
-                        date: "2023-06-09",
-                        time: '10:00',
-                        duration: 120
-                    },
-                    {
-                        id: 2,
-                        title: 'Cours UML',
-                        details: 'Company is paying!',
-                        date: "2023-06-08",
-                        time: '11:30',
-                        duration: 90
-                    }
-                ]
+				events: []
 			}
+        },
+        mounted(){
+            return this.fetchPlanning();
         },
         methods: {
             calendarNext () {
-                console.log(this.$refs.calendar);
                 this.$refs.calendar.next()
             },
             calendarPrev () {
@@ -155,6 +143,37 @@
                 }
                 return events
             },
+            fetchPlanning() {
+                axios.get(config.apiUrl + 'planning/' + localStorage.getItem("idUser"), {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem("token")}`
+                }
+                })
+                    .then(response => {
+                        const planning = response.data;
+                        this.events = planning.map(cours => {
+                            return {
+                                id: cours.id,
+                                title: cours.nom,
+                                details: cours.salle,
+                                date: this.formatDate(cours.date.date),
+                                time: this.formatTime(cours.heure.date),
+                                duration: 90
+                            };
+                        });
+                    })
+                    .catch((e)=>{
+                        console.log(e);
+                    })
+            },
+            formatDate(date) {
+                const dd = new Date(date);
+                return dd.getFullYear() + "-" +  (dd.getMonth()+1).toString().padStart(2, '0') + "-" + dd.getDate().toString().padStart(2, '0')
+            },
+            formatTime(time) {
+                const tt = new Date(time);
+                return tt.getHours().toString().padStart(2, '0') + ":" + tt.getMinutes().toString().padStart(2, '0');
+            }
         },
         computed: {
             formattedDate() {

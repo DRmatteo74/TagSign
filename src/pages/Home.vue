@@ -5,6 +5,7 @@
                 <div class="column q-mr-md" style="width: 35%; height: 100%;">
                     <div class="col-auto q-mb-md">
                       <NextClass :is-prof="isProf" v-if="isEleve || isProf"/>
+                      <SchoolSelection v-if="isAp"/>
                     </div>
                     <div class="col" >
                       <Absence v-if="isEleve"/>
@@ -24,6 +25,7 @@ import { ref } from 'vue'
 import NextClass from '@/components/NextClass.vue'
 import PlanningSmall from '@/components/Planning.vue'
 import Absence from '@/components/AbsenceEleveModule.vue'
+import SchoolSelection from '@/components/SchoolSelection.vue'
 
 export default {
   name: 'HomePage',
@@ -31,7 +33,8 @@ export default {
   components: {
     NextClass,
     PlanningSmall,
-    Absence
+    Absence,
+    SchoolSelection
   },
 
   setup () {
@@ -43,9 +46,19 @@ export default {
   data(){
     return {
       isProf : false,
-      isEleve : false,
-      isAp : true,
+      isEleve : true,
+      isAp : false,
       isAdmin : false
+    }
+  },
+  mounted() {
+    const roles = JSON.parse(localStorage.getItem('roles'));
+    
+    if (roles && roles.length > 0) {
+      this.isProf = roles.includes('ROLE_PROF');
+      this.isEleve = roles.includes('ROLE_ELEVE');
+      this.isAp = roles.includes('ROLE_AP');
+      this.isAdmin = roles.includes('ROLE_ADMIN');
     }
   }
 }

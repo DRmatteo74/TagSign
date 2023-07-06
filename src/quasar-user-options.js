@@ -5,6 +5,7 @@ import '@quasar/extras/material-icons/material-icons.css'
 // To be used on app.use(Quasar, { ... })
 
 import { QCalendar } from '@quasar/quasar-ui-qcalendar'
+import { Notify } from 'quasar'
 
 export default {
   config: {
@@ -26,6 +27,7 @@ export default {
     },
   },
   plugins: {
-    QCalendar
+    QCalendar,
+    Notify
   }
 }
