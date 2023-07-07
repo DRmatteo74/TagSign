@@ -25,6 +25,7 @@
         },
         methods : {
             openAppelProf() {
+                if(this.id == null){return;}
                 if (this.isProf === true) {
                   this.$router.push('/appel/' + this.id);
                 }
@@ -40,7 +41,7 @@
                         this.id = nextCours.id;
                         this.date = this.formatDate(nextCours.date, nextCours.heure)
                         this.cours = nextCours.cours;
-                        this.salle = nextCours.salle;
+                        this.salle = "Salle : " + nextCours.salle;
                         this.presence = nextCours.presence;
                     })
                     .catch((e)=>{
@@ -74,8 +75,8 @@
             </div>
             <q-card-section>
                 <div class="text-h6 center text-white">{{ date }}</div>
-                <div class="text-h4 center text-white text-weight-bold">{{ cours }}</div>
-                <div class="text-h6 center text-white">Salle : {{ salle }}</div>
+                <div class="text-h4 center text-white text-weight-bold">{{ cours == null ? "Aucun cours prochainement" : cours }}</div>
+                <div class="text-h6 center text-white">{{ salle }}</div>
             </q-card-section>
         </q-card>
     </div>
