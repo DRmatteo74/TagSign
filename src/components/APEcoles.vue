@@ -1,33 +1,51 @@
 <script>
-import { ref } from 'vue'
-  export default {
-  name: 'LayoutDefault',
+  import axios from 'axios';
+  import config from '@/assets/config';
 
-  setup () {
+  export default {
+    name: 'APEcoles',
+    data() {
     return {
-      validation: ref(true)
+      ecoles: [],
+      selectedEcole: null
+    };
+  },
+  mounted() {
+    this.fetchEcoles();
+  },
+  methods: {
+    fetchEcoles() {
+      axios.get(config.apiUrl + 'ecoles', {
+        headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`
+        }
+      })
+      .then(response => {
+        this.ecoles = response.data;
+      })
+      .catch(error => {
+        console.error(error);
+      });
+    },
+    clickEcole(id){
+      this.selectedEcole = id;
+      console.log(this.selectedEcole)
     }
   }
-}
+  }
 </script>
 
 <template>
  <q-card flat  
-  ordered
-  style="background: var(--moduleBackgroundColor); border-radius: 10px; padding: 10px;">
-  <q-card-section>
-    <div class="text-weight-bold">Ecoles :</div>
-    <q-btn push style="width: 100%;height: 60px;margin-bottom: 2%;" color="primary" label="ESGI" />
-    <q-btn push style="width: 100%;height: 60px;margin-bottom: 2%" color="primary" label="ENGDRE" />
-    <q-btn push style="width: 100%;height: 60px;margin-bottom: 2%" color="primary" label="Maestriss BTS" />
+  ordered 
+  class="card-module">
+  <div class="text-h6 text-weight-bold">Ecoles : </div>
+  <q-card-section class="row wrap">
+    <div class="col-6 q-px-sm" v-for="ecole in ecoles" :key="ecole.id">
+      <q-btn push class="q-ma-sm q-pa-md full-width" color="primary" :label="ecole.nom" @click="clickEcole(ecole.id)" />
+    </div>
   </q-card-section>
 </q-card>
     
   
 </template>
-
-<style>
-  .center{
-    text-align: center;
-  }
-</style>

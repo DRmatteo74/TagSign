@@ -4,11 +4,12 @@
             <div class="row justify-between fit">
                 <div class="column q-mr-md" style="width: 35%; height: 100%;">
                     <div class="col-auto q-mb-md">
-                      <NextClass :is-prof="isProf" v-if="isEleve || isProf"/>
-                      <SchoolSelection v-if="isAp"/>
+                      <NextClass :is-prof="isProf" v-if="(isEleve || isProf) && !isAp"/>
+                      <APEcoles v-if="isAp"/>
                     </div>
                     <div class="col" >
                       <Absence v-if="isEleve"/>
+                      <APClasses v-if="isAp"/>
                     </div>
                 </div>
                 <div class="col">
@@ -25,7 +26,8 @@ import { ref } from 'vue'
 import NextClass from '@/components/NextClass.vue'
 import PlanningSmall from '@/components/Planning.vue'
 import Absence from '@/components/AbsenceEleveModule.vue'
-import SchoolSelection from '@/components/SchoolSelection.vue'
+import APClasses from '@/components/APClasses.vue'
+import APEcoles from '@/components/APEcoles.vue'
 
 export default {
   name: 'HomePage',
@@ -34,7 +36,8 @@ export default {
     NextClass,
     PlanningSmall,
     Absence,
-    SchoolSelection
+    APClasses,
+    APEcoles
   },
 
   setup () {

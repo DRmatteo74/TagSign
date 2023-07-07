@@ -1,33 +1,26 @@
 <script>
-import { ref } from 'vue'
   export default {
-  name: 'LayoutDefault',
-
-  setup () {
-    return {
-      validation: ref(true)
-    }
-  }
+  name: 'APClasses',
 }
 </script>
 
 <template>
  <q-card flat  
   ordered
-  style="background: var(--moduleBackgroundColor); border-radius: 10px; padding: 10px;">
-  <q-card-section>
-    <div class="text-weight-bold">Classes :</div>
-    <q-btn push style="width: 48%;height: 60px;margin-bottom: 2%; margin-right: 4%;" color="primary" label="ESGI" />
-    <q-btn push style="width: 48%;height: 60px;margin-bottom: 2%" color="primary" label="ENGDRE" />
-    <q-btn push style="width: 48%;height: 60px;margin-bottom: 2%; margin-right: 4%;" color="primary" label="Maestriss BTS" />
+  class="card-module">
+  <div class="text-h6 text-weight-bold">Classes : </div>
+  <q-card-section class="row wrap">
+    <div class="col-6 q-px-sm">
+      <q-btn push class="q-ma-sm q-pa-md full-width" color="primary" label="ESGI" />
+    </div>
+    <div class="col-6 q-px-sm">
+      <q-btn push class="q-ma-sm q-pa-md full-width" color="primary" label="ENGDRE" />
+    </div>
+    <div class="col-6 q-px-sm">
+      <q-btn push class="q-ma-sm q-pa-md full-width" color="primary" label="Maestriss BTS" />
+    </div>
   </q-card-section>
 </q-card>
     
   
 </template>
-
-<style>
-  .center{
-    text-align: center;
-  }
-</style>
