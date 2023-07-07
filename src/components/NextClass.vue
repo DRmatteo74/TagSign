@@ -52,7 +52,7 @@
                 const dd = new Date(date);
                 let h = heure.substring(0, heure.length - 3);
                 h = h.replace(":", "h")
-                return dd.getDate().toString().padStart(2, '0') + "/" + dd.getMonth().toString().padStart(2, '0') + "/" + dd.getFullYear() + " " +h;
+                return dd.getDate().toString().padStart(2, '0') + "/" + (dd.getMonth()+1).toString().padStart(2, '0') + "/" + dd.getFullYear() + " " +h;
             },
         }
     }
@@ -66,10 +66,10 @@
             style="background: #009eF7" flat
             v-bind:style="isProf == true? {'cursor': 'pointer'} : {'cursor': 'auto'}">
             <div>
-                <q-badge v-if="presence === true" floating color="green" rounded>
+                <q-badge v-if="presence === true" floating color="green" class="custom-badge">
                     <q-icon name="done" color="white" />
                 </q-badge>
-                <q-badge v-else floating color="red" rounded>
+                <q-badge v-else floating color="red" class="custom-badge">
                     <q-icon name="close" color="white" />
                 </q-badge>
             </div>
@@ -83,7 +83,19 @@
 </template>
 
 <style>
-  .center{
-    text-align: center;
-  }
+    .center{
+      text-align: center;
+    }
+
+    .q-badge.custom-badge {
+        padding: 4px;
+        border-radius: 50%;
+        font-size: 20px;
+    }   
+
+    .q-badge--floating.custom-badge {
+        top: -10px;
+        right: -10px;
+    }
+
 </style>
