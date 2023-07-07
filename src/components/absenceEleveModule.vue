@@ -2,7 +2,7 @@
         <q-layout class="card-module" container >
             <q-header reveal  view="lHh Lpr lFf" class="q-px-lg q-pt-lg bg-moduleBackgroundColor text-color">
                 <div class="text-h6 text-weight-bold">Absences</div>
-                <p class="text-grey-7 text-weight-thin">1 absences non justifié</p>
+                <p class="text-grey-7 text-weight-thin">{{nbAbsenceInjustifie}} absence(s) non justifié</p>
             </q-header>
             <q-page-container>
             <q-page padding>
@@ -93,11 +93,13 @@ import axios from 'axios';
                 events: [],
                 id : 1,
                 selected_file:'',
-                check_if_document_upload:false
+                check_if_document_upload:false,
+                nbAbsenceInjustifie : 0
             }
         },
         mounted() {
-            return this.fetchAbsences()
+            this.fetchAbsences();
+
         },
         methods: {
             fetchAbsences() {
@@ -117,6 +119,14 @@ import axios from 'axios';
                                 justificatif: absence.justifie !== null ? absence.justifie : false
                             };
                         });
+
+                        let count = 0;
+                        this.events.forEach(e => {
+                            if(e.justificatif == false){
+                                count++;
+                            }
+                        });
+                        this.nbAbsenceInjustifie = count;
                     })
                     .catch((e)=>{
                         console.log(e);
@@ -127,7 +137,7 @@ import axios from 'axios';
             },
             formatDate(date) {
                 const dd = new Date(date);
-                return dd.getDate().toString().padStart(2, '0') + "/" + dd.getMonth().toString().padStart(2, '0') + "/" + dd.getFullYear()
+                return dd.getDate().toString().padStart(2, '0') + "/" + (dd.getMonth() + 1).toString().padStart(2, '0') + "/" + dd.getFullYear()
             },
             formatTime(time) {
                 const tt = new Date(time);
