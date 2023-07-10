@@ -29,7 +29,6 @@
     },
     clickEcole(id){
       this.selectedEcole = id;
-      console.log(this.selectedEcole)
     }
   }
   }

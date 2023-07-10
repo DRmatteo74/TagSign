@@ -226,7 +226,7 @@ import config from '@/assets/config.js';
                 coursId: this.idCours,
                 eleves: this.listeOfEleve
             };
-            console.log(JSON.stringify(data));
+            
             axios.post(config.apiUrl + "cours/setPresence", data, {
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem("token")}`
