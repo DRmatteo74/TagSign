@@ -34,7 +34,7 @@
   </template>
   
 <script>
-import Planning from '@/components/planning.vue'
+import Planning from '@/components/Planning.vue'
 import Absences from '@/components/APStudentTable.vue'
 import Eleves from '@/components/APListEleves.vue'
 
