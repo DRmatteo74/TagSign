@@ -14,9 +14,9 @@
         data() {
             return {
                 id: 0,
-                date : "",
-                cours : "",
-                salle : "",
+                date : null,
+                cours : null,
+                salle : null,
                 presence: false
 			}
         },

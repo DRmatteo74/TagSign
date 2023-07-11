@@ -17,8 +17,11 @@
                                 <div class="text-subtitle2 text-weight-bold no-margin no-padding">{{ event.title }}</div>
                                 <p class="text-grey-7 text-weight-thin no-margin no-padding">{{ event.cours }}</p>
                             </div>
-                            <q-badge v-if="event.justificatif == false" text-color="white" class="bg-negative q-px-md q-py-xs" style="border-radius: 50px;">
+                            <q-badge v-if="event.justificatif == false && event.fileSend == false" text-color="white" class="bg-negative q-px-md q-py-xs" style="border-radius: 50px;">
                                 <div class="text-caption">Non justifié</div>
+                            </q-badge>
+                            <q-badge v-else-if="event.justificatif == false && event.fileSend == true" text-color="white" class="bg-orange q-px-md q-py-xs" style="border-radius: 50px;">
+                                <div class="text-caption">Justificatif envoyé</div>
                             </q-badge>
                             <q-badge v-else text-color="white" class="bg-positive q-px-md q-py-xs" style="border-radius: 50px;">
                                 <div class="text-caption">Justificatif envoyé</div>
@@ -32,11 +35,14 @@
                                     <div class="col text-h5 text-weight-bold ellipsis q-mr-md">
                                         Absence
                                     </div>
-                                    <q-badge v-if="event.justificatif == false" text-color="white" class="bg-negative q-px-md q-py-xs" style="border-radius: 50px;">
-                                        <div class="text-caption">Non justifié</div>
+                                    <q-badge v-if="event.justificatif == false && event.fileSend == false" text-color="white" class="bg-negative q-px-md q-py-xs" style="border-radius: 50px;">
+                                        <div class="text-caption text-uppercase text-weight-bold">Non justifié</div>
+                                    </q-badge>
+                                    <q-badge v-else-if="event.justificatif == false && event.fileSend == true" text-color="white" class="bg-orange q-px-md q-py-xs" style="border-radius: 50px;">
+                                        <div class="text-caption text-uppercase text-weight-bold">Justificatif envoyé</div>
                                     </q-badge>
                                     <q-badge v-else text-color="white" class="bg-positive q-px-md q-py-xs" style="border-radius: 50px;">
-                                        <div class="text-caption">Justificatif envoyé</div>
+                                        <div class="text-caption text-uppercase text-weight-bold">Justificatif validé</div>
                                     </q-badge>
                                 </div>
                             </q-card-section>
@@ -47,20 +53,20 @@
                                 <div class="text-h6">{{ event.date }}</div>
                             </q-card-section>
 
-                            <q-card-section class="q-pt-none q-mt-sm">
+                            <q-card-section class="q-pt-none q-mt-sm" v-if="event.justificatif == false">
                                 <div class="items-center text-center">
-                                    <q-btn @click="uploadFiles" v-if="event.justificatif == true" class="btnColor">Envoyé un nouveau justificatif</q-btn>
-                                    <q-btn @click="uploadFiles" v-else class="btnColor">Envoyé un justificatif</q-btn>
+                                    <div v-if="event.fileSend == true" class="text-uppercase text-weight-bold">Envoyé un nouveau justificatif : </div>
+                                    <div v-else class="text-uppercase text-weight-bold">Envoyé un justificatif : </div>
                                 </div>
+                                <q-separator spaced/>
                                 <q-uploader
                                     class="q-mt-sm btnColor no-shadow"
                                     label="Fichiers"
-                                    multiple
                                     ref="uploader"
                                     max-file-size="5242880"
                                     max-total-size="15728640"
                                     accept=".jpg, image/*, .pdf, .png, .doc"
-                                    :factory="factoryFn"
+                                    :factory="files => factoryFn(files, event)"
                                 />
                             </q-card-section>
                         </q-card>
@@ -82,6 +88,10 @@
 .q-btn:before {
     box-shadow: none !important;
 }
+
+.bg-orange{
+    background-color: orangered;
+}
 </style>
 <script>
 import config from '@/assets/config.js';
@@ -94,10 +104,12 @@ import axios from 'axios';
                 id : 1,
                 selected_file:'',
                 check_if_document_upload:false,
-                nbAbsenceInjustifie : 0
+                nbAbsenceInjustifie : 0,
+                token: null
             }
         },
         mounted() {
+            this.token = `Bearer ${localStorage.getItem("token")}`
             this.fetchAbsences();
 
         },
@@ -112,14 +124,15 @@ import axios from 'axios';
                         const absences = response.data.absences;
                         this.events = absences.map(absence => {
                             return {
-                                id: this.generateId(),
+                                idCours: absence.idCours,
                                 title: `Absence du ${this.formatDate(absence.date.date)} ${this.formatTime(absence.heure.date)}`,
                                 cours: absence.cours,
                                 date: this.formatDateTime(absence.date.date, absence.heure.date),
-                                justificatif: absence.justifie !== null ? absence.justifie : false
+                                justificatif: absence.justifie !== null ? absence.justifie : false,
+                                fileSend: absence.justificatif != null
                             };
                         });
-
+                        console.log(this.events);
                         let count = 0;
                         this.events.forEach(e => {
                             if(e.justificatif == false){
@@ -149,19 +162,29 @@ import axios from 'axios';
                 return this.formatDate(date) + " " + this.formatTime(time);
             },
             // eslint-disable-next-line no-unused-vars
-            factoryFn (files) {
+            factoryFn (files, event) {
+                let uploadFile = files[0];
+                let fd = new FormData();
+                fd.append("file", uploadFile);
+                fd.append("id", "1");
+                fd.append("name", event.idCours);
+                fd.append("cours", event.idCours);
+                fd.append("user", localStorage.getItem("idUser"));
 
-                return new Promise((resolve) => {
-                  // simulating a delay of 2 seconds
-                  setTimeout(() => {
-                    resolve({
-                        url: 'localhost:8000/api/absence/uploadJustificatif?cours=4&user=14',
-                        headers: [
-                            { name: 'Authorization', value: `bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE2ODgzMDI2NjksImV4cCI6MTY4ODMwNjI2OSwicm9sZXMiOlsiUk9MRV9BRE1JTiIsIlJPTEVfVVNFUiJdLCJ1c2VybmFtZSI6ImFkbWluIn0.JxSU518enkHX6VlsVEAd-Zl0hNrYey_sd7pP-loFbWF90t5q0S_GLD3aMUrJWfLA-L0ARE6VmOhNXcAMGZBSQV-gqJZFQgvbZUAlvbDDAO8lZF6gfh0809vz_mvC5FTNRQRNuQeplWFleCyNUZNKkbtmbn-Vljh6cQHPlMfdfo_xMuuOaP7deWeAXG1zvnrKsDa4UeW_GFBBzoFzybyy9MDEVKstYByWeX_hpeGD2UNlXeH4Suc-NY5FlEtWEauIGdrqZs440jl78faRoPEFWz-r1_oUWfkonTkgDZZS6XKvzPdZvq9OWTp3Oq-oc3yTLLh7G98wubMbf1tkcG6b0goJPZ5eArIzIVqJu2NT2RB0ambp0HemqkstCto77zw2DWx63YhnUn2mM_w54bEKxtiouxjP7bfFc5LhWRb6F4IXRtINqGBXkqs-AhF7Rta28vmRSG_M7YIQya6TbscHNmLm4rVtm02uEUaKe0rIjCTN7MQSANB0UCkKIFUf8M2qCuPdyclmymLA4mP49O1A6psLybAoKOcFslX55FxBtATWpd4BuOcyvpu1MmE1TIVpwXLD6wDMG2AZR3gn1jJbWNeMCv75YxtHp7BJSo0paAolukU6bBGgySZppn73rjFy22i92R8os612mO10Vkx-FXqO7S8UL2WCfS6IDf_9cfE` }
-                        ]
-                    })
-                  }, 500)
-                })
+                axios.post(config.apiUrl + 'absence/uploadJustificatif', fd, {
+                   headers: {'Content-Type': undefined, 'Authorization' : this.token},
+                }).then(
+                function (response) {
+                    if (response.data.success) {
+                        this.$q.notify({
+                            color: 'positive',
+                            message: 'Fichier envoyé avec succès !'
+                        });
+                        event.id = false;
+                    }
+                }.bind(this))
+                
+                
             }
         }
     }
