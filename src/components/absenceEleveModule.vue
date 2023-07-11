@@ -62,7 +62,6 @@
                                 <q-uploader
                                     class="q-mt-sm btnColor no-shadow"
                                     label="Fichiers"
-                                    multiple
                                     ref="uploader"
                                     max-file-size="5242880"
                                     max-total-size="15728640"
@@ -172,7 +171,7 @@ import axios from 'axios';
                 fd.append("cours", event.idCours);
                 fd.append("user", localStorage.getItem("idUser"));
 
-                axios.post('http://localhost:8000/api/absence/uploadJustificatif', fd, {
+                axios.post(config.apiUrl + 'absence/uploadJustificatif', fd, {
                    headers: {'Content-Type': undefined, 'Authorization' : this.token},
                 }).then(
                 function (response) {
