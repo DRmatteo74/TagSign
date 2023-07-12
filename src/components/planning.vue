@@ -106,6 +106,11 @@
    
     export default {
         name: 'PlanningSmall',
+        props: {
+            isDifferent: {
+                default: 0
+            }
+        },
         components: {
 			QCalendar
         },
@@ -144,10 +149,17 @@
                 return events
             },
             fetchPlanning() {
-                axios.get(config.apiUrl + 'planning/' + localStorage.getItem("idUser"), {
-                headers: {
-                    Authorization: `Bearer ${localStorage.getItem("token")}`
+                let idPlanning = 0;
+                if(this.isDifferent == 0){
+                    idPlanning = localStorage.getItem("idUser");
+                }else{
+                    idPlanning = this.isDifferent;
                 }
+                console.log(this.isDifferent);
+                axios.get(config.apiUrl + 'planning/' + idPlanning, {
+                    headers: {
+                        Authorization: `Bearer ${localStorage.getItem("token")}`
+                    }
                 })
                     .then(response => {
                         const planning = response.data;
@@ -162,8 +174,8 @@
                             };
                         });
                     })
-                    .catch((e)=>{
-                        console.log(e);
+                    .catch(()=>{
+                        //console.log(e);
                     })
             },
             formatDate(date) {
@@ -210,7 +222,12 @@
                 })
                 return map
             }
-        }
+        },
+        watch: {
+            isDifferent() {
+                this.fetchPlanning();
+            },
+        },
     }
 
 </script>

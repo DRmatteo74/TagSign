@@ -14,7 +14,7 @@
                 </div>
                 <div class="col">
                     <PlanningSmall  v-if="isEleve || isProf"/>
-                    <APStudentTable v-if="isAp"/>
+                    <APTab v-if="isAp" :selected-ecole="selectedEcole" :selected-classe="selectedClasse"/>
                 </div>
             </div>
         </div>
@@ -29,7 +29,7 @@
     import Absence from '@/components/AbsenceEleveModule.vue'
     import APClasses from '@/components/APClasses.vue'
     import APEcoles from '@/components/APEcoles.vue'
-    import APStudentTable from '@/components/APStudentTable.vue'
+    import APTab from './APTab.vue'
 
     export default {
         name: 'HomePage',
@@ -40,7 +40,7 @@
             Absence,
             APClasses,
             APEcoles,
-            APStudentTable
+            APTab
         },
 
         setup () {

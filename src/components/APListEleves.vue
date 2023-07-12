@@ -1,8 +1,8 @@
 <template>
   <div>
     <q-table
-    flat
-      title="Éleves"
+      flat
+      title="Élèves"
       :rows="rows"
       :columns="columns"
       row-key="nom"
@@ -69,9 +69,3 @@ export default {
   }
 }
 </script>
-<style>
-.bg-galette {
-  background: #ffffff !important;
-  border-radius: 10px;
-}
-</style>

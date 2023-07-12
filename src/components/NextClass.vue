@@ -44,8 +44,7 @@
                         this.salle = "Salle : " + nextCours.salle;
                         this.presence = nextCours.presence;
                     })
-                    .catch((e)=>{
-                        console.log(e);
+                    .catch(()=>{
                     })
             },
             formatDate(date, heure) {

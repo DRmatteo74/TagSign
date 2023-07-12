@@ -80,9 +80,3 @@ export default {
   }
 }
 </script>
-<style>
-.bg-galette {
-  background: #ffffff !important;
-  border-radius: 10px;
-}
-</style>
