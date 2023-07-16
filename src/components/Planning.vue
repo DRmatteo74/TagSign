@@ -2,12 +2,14 @@
     <div class="fit">
         <q-layout class="card-module" container>
             <q-header reveal view="lHh Lpr lFf" class="q-px-lg q-pt-lg bg-moduleBackgroundColor text-color">
-                <div class="text-h6 text-weight-bold">Emploi du temps</div>
+                <NouveauCours v-if="isDifferent !== 0" class="fixed-right" :selected-ecole="selectedEcole" :selected-classe="selectedClasse"/>
+                <span class="text-h6 text-weight-bold">Emploi du temps</span>
                 <p class="text-grey-7 text-weight-thin">Emploi du temps prévisionnel, sous réserve de modification</p>
 
                 <div class="row">
                     <div class="col">
                         <q-btn-group class="q-mb-lg no-shadow">
+                    
                             <q-btn class="btnColor" label="<" @click="calendarPrev" />
                             <q-btn class="btnColor" label=">" @click="calendarNext"/>
                         </q-btn-group>
@@ -100,18 +102,28 @@
 </style>
   
 <script>
+    import NouveauCours from '@/components/modal/ModalCreateLesson.vue'
     import { QCalendar, parseTimestamp, addToDate } from '@quasar/quasar-ui-qcalendar'
     import axios from 'axios';
     import config from '@/assets/config.js';
    
     export default {
+
         name: 'PlanningSmall',
         props: {
             isDifferent: {
                 default: 0
-            }
+            },
+            selectedClasse: {
+                default: null
+            },
+            selectedEcole: {
+                default: null
+}
+            
         },
         components: {
+            NouveauCours,
 			QCalendar
         },
         data() {

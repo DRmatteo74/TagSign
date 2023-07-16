@@ -24,7 +24,7 @@
                 <Eleves/>
             </q-tab-panel>
             <q-tab-panel name="planning">
-                <Planning :isDifferent="randomUserForPlannig"/>
+                <Planning :isDifferent="randomUserForPlannig" :selected-ecole="selectedEcole" :selected-classe="selectedClasse" />
             </q-tab-panel>
         </q-tab-panels>
     </div>
@@ -80,7 +80,7 @@
                             })
                             .then(response => {
                                 const user = response.data;
-                                this.randomUserForPlannig = user.id;
+                                this.randomUserForPlannig = user[0].id;
                             })
                             .catch((e)=>{
                                 console.log(e);

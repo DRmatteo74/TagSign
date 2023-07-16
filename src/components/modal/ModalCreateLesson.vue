@@ -1,15 +1,16 @@
 <template>
   <div class="q-pa-md q-gutter-sm">
-    <q-btn label="Add Lesson" color="primary" @click="prompt = true" />
+    <q-btn label="+" rounded color="primary" @click="prompt = true" />
     <q-dialog v-model="prompt" persistent>
       <q-card style="min-width: 350px">
         <q-card-section>
-          <div class="text-h6">Nouvelle Lesson</div>
+          <div class="text-h6">Nouveau cour</div>
         </q-card-section>
         <q-toggle v-model="distanciel" label="Distanciel" />
         <q-card-section class="q-pt-none">
           
-          <q-input dense v-model="address" autofocus label="Nom du cours" @keyup.enter="prompt = false" />
+          <q-input dense v-model="nomCour" autofocus label="Nom du cours"/>
+          <q-select v-model="intervenant" :options="intervenants" label="Intervenant" />
     <q-input class="top" filled v-model="date" label="date">
       <template v-slot:prepend>
         <q-icon name="event" class="cursor-pointer">
@@ -36,13 +37,13 @@
       </template>
     </q-input>
     <q-select v-if="distanciel===false" v-model="salle" :options="salles" label="Salle" />
-    <q-select v-model="classe" :options="classes" label="Classe" />
   </q-card-section>
 
 
         <q-card-actions align="right" class="text-primary">
           <q-btn flat label="Annuler" v-close-popup />
-          <q-btn flat label="Ajouter" v-close-popup />
+          <q-btn :disabled="nomCour === '' ||  date === '' || intervenant === '' || salle === '' && distanciel === false" 
+          @click="nouveauCour" flat label="Ajouter" v-close-popup />
         </q-card-actions>
       </q-card>
     </q-dialog>
@@ -55,20 +56,22 @@ import config from '@/assets/config.js';
 import axios from 'axios';
 
 export default {
+  props: ['selectedEcole', 'selectedClasse'],
   setup () {
     return {
       alert: ref(false),
       confirm: ref(false),
       prompt: ref(false),
       date: ref(''),
-      classes: ref([]),
-      classe: ref(),
-      idClasses: ref([]),
+      nomCour: ref(''),
       salles: ref([]),      
-      salle: ref(),
+      salle: ref(''),
       idSalles: ref([]),
-      address: ref(''),
       distanciel: ref(false),
+      intervenants: ref([]),
+      intervenant: ref(''),
+      idIntervenant: ref([]),
+      data: ref(null),
     }
   },
   methods: {
@@ -86,25 +89,47 @@ export default {
         }
       })
     },
-    async fetchClasses() {
-      await axios.get(config.apiUrl + 'classes', {
+    async fetchProfs() {
+      await axios.get(config.apiUrl + 'users/profs', {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`
         }
       })
       .then(response => {
-        console.log(response.data);
         for (let i = 0; i < response.data.length; i++) {
-          this.classes.push(response.data[i].ecole.nom + " " + response.data[i].nom)
-          this.idClasses.push(response.data[i].id)
+          this.intervenants.push(response.data[i].nom)
+          this.idIntervenant.push(response.data[i].id)
           
         }
       })
-    }
+    },
+    async nouveauCour() {
+      this.data = {
+        idSalle: this.idSalles[this.salles.indexOf(this.salle)],
+        idClasse: this.selectedClasse,
+        idIntervenant: this.idIntervenant[this.intervenants.indexOf(this.intervenant)],
+        nom: this.nomCour,
+        date: this.date.substr(0, this.date.indexOf(" ")),
+        heure: this.date.substr(this.date.indexOf(" ")+1),
+        distanciel: this.distanciel
+      }
+      console.log(this.data);
+      await axios.post(config.apiUrl + "cours/create", this.data, {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem("token")}`
+                }
+            })
+              .then(response => {
+                console.log(response.data);
+              })
+              .catch(error => {
+                console.error(error);
+              });
+    },
   },
   mounted(){
             this.fetchSalles();
-            this.fetchClasses();
+            this.fetchProfs();
         },
 }
 </script>
