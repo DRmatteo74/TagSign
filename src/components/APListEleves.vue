@@ -1,4 +1,5 @@
 <template>
+  <NewStudent class="right" />
   <div>
     <q-table
       flat
@@ -12,60 +13,52 @@
 </template>
 
 <script>
-const columns = [
-  { name: 'nom', required: true, label: 'Nom', align: 'center', field: row => row.nom, sortable: true },
-  { name: 'Prenom', align: 'center', label: 'Prenom', field: row => row.prenom, sortable: true },
-]
-
-const rows = [
-  {
-    nom: 'DUVAL',
-    prenom: 'Vincent',
-    date: '04//07/2023',
-    cours: 'UML',
-    intervenant: 'BONCHE',
-    justificatif: null,
-  },
-  {
-    nom: 'JEAN',
-    prenom: 'Anthony',
-    date: '04//07/2023',
-    cours: 'Assembleur',
-    intervenant: 'BOUMGHAR',
-    justificatif: null,
-  },
-  {
-    nom: 'PEYRARD',
-    prenom: 'Tibaut',
-    date: '04//07/2023',
-    cours: 'java',
-    intervenant: 'JESEPLUS',
-    justificatif: null,
-  },
-  {
-    nom: 'DI-RIENZO',
-    prenom: 'Matteo',
-    date: '04//07/2023',
-    cours: 'Droit',
-    intervenant: 'CLOPPET',
-    justificatif: null,
-  },
-  {
-    nom: 'HERNANDEZ',
-    prenom: 'Mathis',
-    date: '04//07/2023',
-    cours: 'Application Androîd',
-    intervenant: 'VARDAGNANT',
-    justificatif: null,
-  },
-]
+import NewStudent from '@/components/modal/ModalCreateStudent.vue'
+import axios from 'axios';
+import config from '@/assets/config.js';
+import { ref } from 'vue'
 
 export default {
+  props: ['selectedEcole', 'selectedClasse'],
+  components: {
+      NewStudent
+        },
   setup () {
     return {
-      columns,
-      rows
+      columns: ref([
+  { name: 'nom', required: true, label: 'Nom', align: 'center', field: 'nom', sortable: true },
+  { name: 'Prenom', align: 'center', label: 'Prenom', field: 'prenom', sortable: true },
+]),
+      rows: ref([])
     }
-  }
+  },
+  methods: {
+    async fetchStudent() {
+      console.log(this.selectedClasse);
+      await axios.get(config.apiUrl + 'classes/' + this.selectedClasse, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`
+        }
+      })
+      .then(response => {
+          this.rows = response.data.utilisateurs
+          console.log(this.rows)
+      })
+      .catch(console.error())
+    },
+  },
+  watch: {
+          selectedClasse() {
+                this.fetchStudent();
+            },
+        },
+        mounted() {
+            return this.fetchStudent()
+        },
 }
 </script>
+<style>
+.right{
+margin-left: 90%; 
+}
+</style>

@@ -59,5 +59,8 @@ export default {
                 this.fetchStudent();
             },
         },
+        mounted() {
+            return this.fetchStudent()
+        },
 }
 </script>

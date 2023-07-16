@@ -21,7 +21,7 @@
             </q-tab-panel>
   
             <q-tab-panel v-model="tab" name="eleves">
-                <Eleves/>
+                <Eleves :selected-ecole="selectedEcole" :selected-classe="selectedClasse"/>
             </q-tab-panel>
             <q-tab-panel name="planning">
                 <Planning :isDifferent="randomUserForPlannig" :selected-ecole="selectedEcole" :selected-classe="selectedClasse" />
