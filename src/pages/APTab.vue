@@ -72,19 +72,8 @@
                     .then(response => {
                         const classe = response.data;
                         if(classe.ecole.id == this.selectedEcole){
-                            // Booléen pour savoir si l'école correspond bien à la classe
-                            axios.get(config.apiUrl + 'users/classe/' + this.selectedClasse, {
-                                headers: {
-                                    Authorization: `Bearer ${localStorage.getItem("token")}`
-                                }
-                            })
-                            .then(response => {
-                                const user = response.data;
-                                this.randomUserForPlannig = user[0].id;
-                            })
-                            .catch((e)=>{
-                                console.log(e);
-                            })
+                            const user = response.data;
+                            this.randomUserForPlannig = user.utilisateurs[0].id;
                         }
                     })
                     .catch((e)=>{

@@ -167,7 +167,7 @@
                 }else{
                     idPlanning = this.isDifferent;
                 }
-                console.log(this.isDifferent);
+                
                 axios.get(config.apiUrl + 'planning/' + idPlanning, {
                     headers: {
                         Authorization: `Bearer ${localStorage.getItem("token")}`

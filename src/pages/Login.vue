@@ -50,7 +50,6 @@
 <script>  
     import axios from 'axios';
     import config from '@/assets/config.js';
-    import { useQuasar } from 'quasar';
 
     export default {
         name: 'LoginPage',
@@ -63,18 +62,17 @@
             }
         },
         setup(){
-            const $q = useQuasar();
             
             return {
                 errorPopup(){
-                    $q.notify({
+                    this.$q.notify({
                         message : "<strong>Erreur :</strong> Nom d'utilisateur ou mot de passe incorrect !",
                         type: "negative",
                         html: true
                     })
                 },
                 successPopup(){
-                    $q.notify({
+                    this.$q.notify({
                         message : "<strong>Vous êtes bien connecté !</strong>",
                         type: "positive",
                         html: true
