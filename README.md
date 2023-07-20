@@ -1,5 +1,11 @@
 # projet_fin_annee
 
+## installation
+
+install lastest stable version of node.js
+
+official side : https://nodejs.org/en
+
 ## Project setup
 ```
 npm install
