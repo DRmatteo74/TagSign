@@ -49,6 +49,7 @@
                     >
                         <div
                             v-if="event.time !== undefined"
+                            @click="downloadPdf(event.id)"
                             class="my-event"
                             :style="badgeStyles(event, 'body', timeStartPos, timeDurationHeight)"
                         >
@@ -197,6 +198,22 @@
             formatTime(time) {
                 const tt = new Date(time);
                 return tt.getHours().toString().padStart(2, '0') + ":" + tt.getMinutes().toString().padStart(2, '0');
+            },
+            downloadPdf(id){
+                if(localStorage.getItem("roles").includes('ROLE_AP')){
+                    axios.get(config.apiUrl + 'appel/' + id, {
+                    headers: {
+                        Authorization: `Bearer ${localStorage.getItem("token")}`
+                    },responseType: 'blob'
+                })
+                    .then((response) => {
+                        const url = URL.createObjectURL(new Blob([response.data], { type: 'application/pdf' }));
+                        window.open(url, '_blank');
+                    })
+                    .catch(()=>{
+                        //console.log(e);
+                    })
+                }
             }
         },
         computed: {
